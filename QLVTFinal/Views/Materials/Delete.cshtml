@@ -1,0 +1,67 @@
+﻿@model QLVTFinal.Models.Material
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Bạn muốn xóa <strong class="text-danger">"@Html.DisplayFor(model => model.nameMaterial)"</strong></h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.nameMaterial)*@
+            Tên vật tư
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameMaterial)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.price)*@
+            Đơn giá
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.count)*@
+            Số lượng tồn
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.count)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.nameCategory)*@
+            Danh mục cha
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameCategory)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.SubCategory.nameSubCategory)*@
+            Danh mục con
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.nameSubCategory)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay lại trang danh sách", "Index")
+        </div>
+    }
+</div>

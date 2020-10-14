@@ -1,0 +1,27 @@
+﻿@model QLVTFinal.Models.Category
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>Danh mục cha</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Danh mục cha
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameCategory)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.idCategory }) |
+    @Html.ActionLink("Quay lại trang danh sách", "Index")
+</p>

@@ -1,0 +1,32 @@
+﻿@model QLVTFinal.Models.Category
+
+@{
+    ViewBag.Title = "Xóa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có chắc chắn xóa <strong class="text-danger">@Html.DisplayFor(model => model.nameCategory)</strong>?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Danh mục cha
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameCategory)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay lại trang danh sách", "Index")
+        </div>
+    }
+</div>

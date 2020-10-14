@@ -1,0 +1,190 @@
+﻿@model IEnumerable<QLVTFinal.Models.tblAdmin>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Avatar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_NickYahoo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_NickSkype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Log)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_LoginType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Birth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Permission)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Actived)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PasswordHash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecurityStamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccessFailedCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Avatar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_NickYahoo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_NickSkype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Roles_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Log)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_LoginType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Birth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Permission)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Actived)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailConfirmed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PasswordHash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecurityStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LockoutEnabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccessFailedCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Admin_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Admin_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Admin_ID })
+        </td>
+    </tr>
+}
+
+</table>

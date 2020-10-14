@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLVatTuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="idCategory" />
+    </Key>
+    <Property Name="idCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="actived" Type="Int32" />
+    <NavigationProperty Name="SubCategories" Relationship="Self.FK_SubCategory_Category" FromRole="Category" ToRole="SubCategory" />
+  </EntityType>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="idMaterial" />
+    </Key>
+    <Property Name="idMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameMaterial" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="price" Type="Double" />
+    <Property Name="count" Type="Int32" />
+    <Property Name="idSubCategory" Type="Int32" />
+    <NavigationProperty Name="SubCategory" Relationship="Self.FK_Material_SubCategory" FromRole="Material" ToRole="SubCategory" />
+    <Property Name="qrcode" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="idAdmin" Type="Int32" />
+    <NavigationProperty Name="tblAdmin" Relationship="QLVatTuModel.FK_Material_tblAdmin" FromRole="Material" ToRole="tblAdmin" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="idSubCategory" />
+    </Key>
+    <Property Name="idSubCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idCategory" Type="Int32" />
+    <Property Name="nameSubCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="actived" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_SubCategory_Category" FromRole="SubCategory" ToRole="Category" />
+    <NavigationProperty Name="Materials" Relationship="Self.FK_Material_SubCategory" FromRole="SubCategory" ToRole="Material" />
+  </EntityType>
+  <Association Name="FK_SubCategory_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="idCategory" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="idCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Material_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="Material" Type="Self.Material" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="idSubCategory" />
+      </Principal>
+      <Dependent Role="Material">
+        <PropertyRef Name="idSubCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLVatTuEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Materials" EntityType="Self.Material" />
+    <EntitySet Name="SubCategories" EntityType="Self.SubCategory" />
+    <AssociationSet Name="FK_SubCategory_Category" Association="Self.FK_SubCategory_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="SubCategory" EntitySet="SubCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Material_SubCategory" Association="Self.FK_Material_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategories" />
+      <End Role="Material" EntitySet="Materials" />
+    </AssociationSet>
+    <EntitySet Name="Accounts" EntityType="QLVatTuModel.Account" />
+    <EntitySet Name="tblAdmins" EntityType="QLVatTuModel.tblAdmin" />
+    <AssociationSet Name="FK_Material_tblAdmin" Association="QLVatTuModel.FK_Material_tblAdmin">
+      <End Role="tblAdmin" EntitySet="tblAdmins" />
+      <End Role="Material" EntitySet="Materials" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="Admin_ID" />
+    </Key>
+    <Property Name="Admin_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Admin_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_NickYahoo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_NickSkype" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Roles_ID" Type="Int32" Nullable="false" />
+    <Property Name="Admin_Created" Type="DateTime" Precision="3" />
+    <Property Name="Admin_Log" Type="DateTime" Precision="3" />
+    <Property Name="Admin_LoginType" Type="Boolean" Nullable="false" />
+    <Property Name="Admin_Sex" Type="Boolean" Nullable="false" />
+    <Property Name="Admin_Birth" Type="DateTime" Precision="3" />
+    <Property Name="Admin_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_Permission" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Admin_Actived" Type="Boolean" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Materials" Relationship="QLVatTuModel.FK_Material_tblAdmin" FromRole="tblAdmin" ToRole="Material" />
+  </EntityType>
+  <Association Name="FK_Material_tblAdmin">
+    <End Type="QLVatTuModel.tblAdmin" Role="tblAdmin" Multiplicity="0..1" />
+    <End Type="QLVatTuModel.Material" Role="Material" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAdmin">
+        <PropertyRef Name="Admin_ID" />
+      </Principal>
+      <Dependent Role="Material">
+        <PropertyRef Name="idAdmin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

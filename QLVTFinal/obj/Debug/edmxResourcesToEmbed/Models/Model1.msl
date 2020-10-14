@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLVatTuModelStoreContainer" CdmEntityContainer="QLVatTuEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="QLVatTuModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+          <ScalarProperty Name="nameCategory" ColumnName="nameCategory" />
+          <ScalarProperty Name="actived" ColumnName="actived" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Materials">
+      <EntityTypeMapping TypeName="QLVatTuModel.Material">
+        <MappingFragment StoreEntitySet="Material">
+          <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+          <ScalarProperty Name="qrcode" ColumnName="qrcode" />
+          <ScalarProperty Name="idMaterial" ColumnName="idMaterial" />
+          <ScalarProperty Name="nameMaterial" ColumnName="nameMaterial" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="idSubCategory" ColumnName="idSubCategory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCategories">
+      <EntityTypeMapping TypeName="QLVatTuModel.SubCategory">
+        <MappingFragment StoreEntitySet="SubCategory">
+          <ScalarProperty Name="idSubCategory" ColumnName="idSubCategory" />
+          <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+          <ScalarProperty Name="nameSubCategory" ColumnName="nameSubCategory" />
+          <ScalarProperty Name="actived" ColumnName="actived" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="QLVatTuModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblAdmins">
+      <EntityTypeMapping TypeName="QLVatTuModel.tblAdmin">
+        <MappingFragment StoreEntitySet="tblAdmin">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Admin_Actived" ColumnName="Admin_Actived" />
+          <ScalarProperty Name="Admin_FullName" ColumnName="Admin_FullName" />
+          <ScalarProperty Name="Admin_Permission" ColumnName="Admin_Permission" />
+          <ScalarProperty Name="Admin_Address" ColumnName="Admin_Address" />
+          <ScalarProperty Name="Admin_Birth" ColumnName="Admin_Birth" />
+          <ScalarProperty Name="Admin_Sex" ColumnName="Admin_Sex" />
+          <ScalarProperty Name="Admin_LoginType" ColumnName="Admin_LoginType" />
+          <ScalarProperty Name="Admin_Log" ColumnName="Admin_Log" />
+          <ScalarProperty Name="Admin_Created" ColumnName="Admin_Created" />
+          <ScalarProperty Name="Roles_ID" ColumnName="Roles_ID" />
+          <ScalarProperty Name="Admin_NickSkype" ColumnName="Admin_NickSkype" />
+          <ScalarProperty Name="Admin_NickYahoo" ColumnName="Admin_NickYahoo" />
+          <ScalarProperty Name="Admin_Phone" ColumnName="Admin_Phone" />
+          <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+          <ScalarProperty Name="Admin_Username" ColumnName="Admin_Username" />
+          <ScalarProperty Name="Admin_Avatar" ColumnName="Admin_Avatar" />
+          <ScalarProperty Name="Admin_ID" ColumnName="Admin_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

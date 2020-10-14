@@ -1,0 +1,35 @@
+﻿@model QLVTFinal.Models.SubCategory
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>Danh mục con</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Danh mục con
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameSubCategory)
+        </dd>
+
+        <dt>
+            Danh mục cha
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.nameCategory)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.idSubCategory }) |
+    @Html.ActionLink("Quay lại trang danh sách", "Index")
+</p>

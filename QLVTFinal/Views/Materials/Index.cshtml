@@ -1,0 +1,257 @@
+﻿@model IEnumerable<QLVTFinal.Models.Material>
+
+@{
+    ViewBag.Title = "Quản lý vật tư";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+<script src="~/Scripts/a076d05399.js"></script>
+<link href="~/Content/material.css" rel="stylesheet" />
+
+<div class="d-flex justify-content-center">
+    <h2 class="mr-2" style="display: inline-block">
+        Danh sách vật tư
+    </h2>
+    <div class="spinner-border" role="status" id="loading"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 mb-2">
+        @*@Html.ActionLink("Tạo mới", "Create")*@
+        <button class="btn btn-outline-info" data-toggle="modal" data-target="#createModal">Tạo mới</button>
+    </div>
+    <div class="col-md-3 mb-2">
+        <input class="form-control form-control-sm" id="search-input" type="text" placeholder="Tìm tên vật tư">
+        <!--<label for="search-input"><i class="fas fa-search" aria-hidden="true"></i></label>-->
+    </div>
+    <div class="col-md-3 mb-2">
+        <select class="form-control valid" id="sortPrice" name="sortPrice">
+            <option value="0" selected disabled>Sắp xếp giá</option>
+            <option value="1">Từ thấp đến cao</option>
+            <option value="2">Từ cao đến thấp</option>
+        </select>
+    </div>
+    <div class="col-md-3 mb-2">
+        <select class="form-control valid" id="searchCategory" name="searchCategory"></select>
+    </div>
+    <div class="col-md-1 mb-2">
+        <button class="btn btn-info" id="search"><i class="fas fa-search" aria-hidden="true"></i></button>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 56px;"></th>
+            <th>
+                Tên vật tư
+            </th>
+            <th style="width: 100px;">
+                Đơn giá
+            </th>
+            <th style="width: max-content;">
+                Số lượng tồn
+            </th>
+            <th>
+                Danh mục cha
+            </th>
+            <th>
+                Danh mục con
+            </th>
+        </tr>
+    </thead>
+
+    <tbody id="tableMaterial"></tbody>
+</table>
+
+<h2 id="not-found" style="display: none">Không tìm thấy kết quả</h2>
+
+<ul id="pagination"></ul>
+<a id="download-excel" target="_blank" data-toggle="tooltip" title="Tải toàn bộ dữ liệu bằng file Excel">
+    <button class="btn btn-outline-primary">
+        <i class="fas fa-file-download"></i> Download Excel
+    </button>
+</a>
+
+<!--Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tạo mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formCreate">
+                    <!--<input name="__RequestVerificationToken" type="hidden" value="-eWcq3S45vZnqlFropTVGssrODSO1OnMaeVVE8Yf1LPyopmROPWeKuW4KSCVZQmtzdKCP7P7c8hDzMErOP6XXqTcADVrqaiAkwMlcVkYgxg1">-->
+                    <div class="form-horizontal">
+                        <input data-val="true" data-val-number="The field idMaterial must be a number." data-val-required="The idMaterial field is required." id="idMaterial" name="idMaterial" type="hidden" value="0">
+                        <div class="form-group">
+                            <label class="control-label" for="nameMaterial">Tên vật tư</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" id="nameMaterial" name="nameMaterial" type="text" value="" required>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="nameMaterial" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="price">Đơn giá</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field price must be a number." id="price" name="price" type="text" value="" pattern="[0-9]*">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="price" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="count">Số lượng tồn</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field count must be a number." id="count" name="count" type="number" value="" min="0">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="count" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idCategory">Danh mục cha</label>
+                            <div class="">
+                                <select class="form-control valid" id="idCategory" name="idCategory" aria-invalid="false" required></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idCategory" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idSubCategory">Danh mục con</label>
+                            <div class="">
+                                <select class="form-control valid" id="idSubCategory" name="idSubCategory" aria-invalid="false" required></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idSubCategory" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idAdmin">Quyền quản lý</label>
+                            <div class="">
+                                <select class="form-control valid" id="idAdmin" name="idAdmin" aria-invalid="false"></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idAdmin" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" id="createBtn">Tạo mới</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Edit-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formEdit">
+                    <input name="__RequestVerificationToken" type="hidden" value="VZGTELBd9wmw6j1-9tkIGsx5QJ1Sk1ss1iFgGn7zr676VHR75KzZbSh2cKgXmWX5rnVK3ODLoI_23JRyeB_Afgw72CeJht6L_7NujdA09jI1">
+                    <div class="form-horizontal">
+                        <input data-val="true" data-val-number="The field idMaterial must be a number." data-val-required="The idMaterial field is required." id="idMaterial2" name="idMaterial2" type="hidden">
+                        <div class="form-group">
+                            <label class="control-label" for="nameMaterial2">Tên vật tư</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" id="nameMaterial2" name="nameMaterial2" type="text" value="" required>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="nameMaterial2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="price2">Đơn giá</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field price must be a number." id="price2" name="price2" type="text" value="" pattern="[0-9]*">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="price2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="count2">Số lượng tồn</label>
+                            <div class="">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field count must be a number." id="count2" name="count2" type="number" value="" min="0">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="count2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idCategory2">Danh mục cha</label>
+                            <div class="">
+                                <select class="form-control valid" id="idCategory2" name="idCategory2" aria-invalid="false" required></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idCategory2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idSubCategory2">Danh mục con</label>
+                            <div class="">
+                                <select class="form-control valid" id="idSubCategory2" name="idSubCategory2" aria-invalid="false" required></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idSubCategory2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label " for="idAdmin2">Quyền quản lý</label>
+                            <div class="">
+                                <select class="form-control valid" id="idAdmin2" name="idAdmin2" aria-invalid="false"></select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="idAdmin2" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" id="editBtn">Sửa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Details-->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input data-val="true" data-val-number="The field idMaterial must be a number." data-val-required="The idMaterial field is required." id="idMaterial3" name="idMaterial3" type="hidden">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer" style="justify-content: flex-start">
+                <button class="btn btn-danger" id="deleteBtn">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+    <script src="~/Scripts/main/material.js"></script>
+}

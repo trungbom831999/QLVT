@@ -1,0 +1,235 @@
+﻿@model QLVTFinal.Models.tblAdmin
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblAdmin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Avatar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Avatar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_NickYahoo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_NickYahoo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_NickSkype)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_NickSkype)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Log)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Log)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_LoginType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_LoginType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Sex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Birth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Birth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Permission)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Permission)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Actived)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Actived)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailConfirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordHash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasswordHash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecurityStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecurityStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TwoFactorEnabled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LockoutEndDateUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LockoutEnabled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessFailedCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccessFailedCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Admin_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

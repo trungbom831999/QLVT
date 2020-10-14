@@ -1,0 +1,38 @@
+﻿@model IEnumerable<QLVTFinal.Models.Category>
+
+@{
+    ViewBag.Title = "Mục đã xóa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mục đã xóa</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Danh mục cha
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nameCategory)
+            </td>
+            <td>
+                <form action="@Url.Action("Recycle", "Categories", new { id = item.idCategory })" method="post">
+                    <input name="__RequestVerificationToken" type="hidden" value="uIc2CZC4kMfcFXxK8WTVAr0U9RMUbYozBdgsi7ftyKrFDH6OzBvLAbtEXGCvWTkE9ePS_tO9tjDqDPNRjb2rmBApKSAFYlIfGVc0almQFRA1">
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Hồi phục" class="btn btn-outline-primary">
+                    </div>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Quay lại trang danh sách", "Index")
+
