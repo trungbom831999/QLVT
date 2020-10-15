@@ -51,7 +51,7 @@ var loadData = function () {
                 if (data[i].count === null) data[i].count = 0;
                 if (data[i].idCategory === null) data[i].nameCategory = "Trống";
                 if (data[i].idSubCategory === null) data[i].nameSubCategory = "Trống";
-                html += '<tr class="trMaterial"><td><div class="dropdown float-right"><button type="button" class="btn btn-extension btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button><div class="dropdown-menu"><a class="dropdown-item" href="#" title="Sửa" data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-edit"></i> Sửa</a><a class="dropdown-item" href="#" title="Chi tiết" data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Chi tiết</a><a class="dropdown-item" href="#" title="Xóa" data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</a></div></div><ul class="custom-menu"><li data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '" ><i class="fas fa-edit"></i> Sửa</li><li data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Xem chi tiết</li><li data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</li></ul></td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameMaterial + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].count + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameCategory + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameSubCategory + '</td></tr>';
+                html += '<tr class="trMaterial"><td><div class="dropdown float-right"><button type="button" class="btn btn-extension btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button><div class="dropdown-menu"><a class="dropdown-item" href="#" title="Sửa" data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-edit"></i> Sửa</a><a class="dropdown-item" href="#" title="Chi tiết" data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Chi tiết</a><a class="dropdown-item" href="#" title="Xóa" data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</a><a class="dropdown-item" href="#" title="Lấy mã QR" data-toggle="modal" data-target="#qrModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-qrcode"></i> Mã QR</a></div></div><ul class="custom-menu"><li data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '" ><i class="fas fa-edit"></i> Sửa</li><li data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Xem chi tiết</li><li data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</li></ul></td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameMaterial + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].count + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameCategory + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameSubCategory + '</td></tr>';
             }
             $("#tableMaterial").html(html);
             paging(response.total, function () {
@@ -445,7 +445,7 @@ $('#detailsModal').on('show.bs.modal', function (event) {
             if (data.price === null) data.price = 0.0;
             if (data.count === null) data.count = 0;
             var body = '';
-            body += '<dl class="dl-horizontal"><dt>Tên vật tư</dt ><dd>' + data.nameMaterial + '<br>ID vật liệu: ' + data.idMaterial + '</dd><dt>Đơn giá</dt><dd>' + data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</dd><dt>Số lượng tồn</dt><dd>' + data.count + '</dd><dt>Danh mục cha</dt><dd>' + data.nameCategory + '<br>ID danh mục cha: ' + data.idCategory + '</dd><dt>Danh mục con</dt><dd>' + data.nameSubCategory + '<br>ID danh mục con: ' + data.idSubCategory + '</dd></dl >';
+            body += '<dl class="dl-horizontal"><dt>Tên vật tư</dt ><dd>' + data.nameMaterial + '<br>ID vật liệu: ' + data.idMaterial + '</dd><dt>Đơn giá</dt><dd>' + data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</dd><dt>Số lượng tồn</dt><dd>' + data.count + '</dd><dt>Danh mục cha</dt><dd>' + data.nameCategory + '<br>ID danh mục cha: ' + data.idCategory + '</dd><dt>Danh mục con</dt><dd>' + data.nameSubCategory + '<br>ID danh mục con: ' + data.idSubCategory + '</dd><dt>Người quản lý</dt><dd>' + data.nameAdmin + '</dd></dl >';
             modal.find(".modal-body").html(body);
         }
     });
@@ -470,7 +470,7 @@ $('#deleteModal').on('show.bs.modal', function (event) {
             title += 'Bạn chắc chắn xóa <strong class="text-danger">' + data.nameMaterial + '?';
             modal.find('#exampleModalLabel').html(title);
             var body = '';
-            body += '<dl class="dl-horizontal"><dt>Tên vật tư</dt ><dd>' + data.nameMaterial + '</dd><dt>Đơn giá</dt><dd>' + data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</dd><dt>Số lượng tồn</dt><dd>' + data.count + '</dd><dt>Danh mục cha</dt><dd>' + data.nameCategory + '</dd><dt>Danh mục con</dt><dd>' + data.nameSubCategory + '</dd></dl >';
+            body += '<dl class="dl-horizontal"><dt>Tên vật tư</dt ><dd>' + data.nameMaterial + '</dd><dt>Đơn giá</dt><dd>' + data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</dd><dt>Số lượng tồn</dt><dd>' + data.count + '</dd><dt>Danh mục cha</dt><dd>' + data.nameCategory + '</dd><dt>Danh mục con</dt><dd>' + data.nameSubCategory + '</dd><dt>Người quản lý</dt><dd>' + data.nameAdmin + '</dd></dl >';
             modal.find(".modal-body").html(body);
 
             /*var footer = '<form action="/Materials/delete/' + data.idMaterial + '" method="post"><input name="__RequestVerificationToken" type="hidden" value="thb6xoM_ooEhkcyvu9JmbwduLlgpWphqoehUbnQR1oTxwy-Kj5kvBuGKQYzUIl2fDDkp8Q44CJ8UZODjJhCF2yzDSiN4tMnY1aAdayFpyYc1"><input type="submit" value="Xóa" class="btn btn-danger"></form><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
@@ -511,6 +511,24 @@ $("#deleteBtn").on('click', function () {
             console.log(err);
         }
     })
+});
+
+//qr code
+$('#qrModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    $.ajax({
+        url: '/Materials/LoadQRCode?id=' + id,
+        type: 'GET',
+        data: "{}",
+        dataType: 'json',
+        success: function (data) {
+            $('#qrcodeImg').attr('src', data.qrcode);
+            $('#nameMaterial3').text(data.nameMaterial);
+            $('#nameAdmin').text(data.nameAdmin);
+        }
+    });
 });
 
 //search

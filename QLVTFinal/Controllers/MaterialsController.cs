@@ -90,15 +90,15 @@ namespace QLVTFinal.Controllers
                              }).OrderByDescending(x => x.idMaterial)
                             .Where(x => x.nameMaterial.Contains(name));
 
-            if(idCategory != 0)
+            if (idCategory != 0)
             {
                 materials = materials.Where(x => x.SubCategory.idCategory == idCategory);
             }
-            if(sortPrice == 1)
+            if (sortPrice == 1)
             {
                 materials = materials.OrderBy(x => x.price);
             }
-            else if(sortPrice == 2)
+            else if (sortPrice == 2)
             {
                 materials = materials.OrderByDescending(x => x.price);
             }
@@ -300,9 +300,11 @@ namespace QLVTFinal.Controllers
 
         public Material GetFirstMaterial(int? id)
         {
+            string nameAdmin = "Chưa phân quyền";
             var mater = (from m in db.Materials
                          join s in db.SubCategories on m.idSubCategory equals s.idSubCategory
                          join c in db.Categories on s.idCategory equals c.idCategory
+                         //join a in db.tblAdmins on m.idAdmin equals a.Admin_ID
                          where m.idMaterial == id
                          select new
                          {
@@ -315,8 +317,20 @@ namespace QLVTFinal.Controllers
                              s.nameSubCategory,
                              m.nameMaterial,
                              m.price,
-                             m.idAdmin
+                             m.idAdmin,
+                             m.qrcode,
                          }).First();
+            if (mater.idAdmin != null)
+            {
+                var materExtra = (from m in db.Materials
+                                  join a in db.tblAdmins on m.idAdmin equals a.Admin_ID
+                                  where m.idMaterial == id
+                                  select new
+                                  {
+                                      a.UserName
+                                  }).First();
+                nameAdmin = materExtra.UserName;
+            }
             Material material = new Material();
             material.idMaterial = mater.idMaterial;
             material.idCategory = mater.idCategory;
@@ -328,6 +342,8 @@ namespace QLVTFinal.Controllers
             material.nameSubCategory = mater.nameSubCategory;
             material.SubCategory = mater.SubCategory;
             material.idAdmin = mater.idAdmin;
+            material.nameAdmin = nameAdmin;
+            material.qrcode = mater.qrcode;
 
             return material;
         }
@@ -417,10 +433,26 @@ namespace QLVTFinal.Controllers
             }
         }
 
+        //public ActionResult Generate(QRCodeModel qrcode)
+        //{
+        //    try
+        //    {
+        //        qrcode.QRCodeImagePath = GenerateQRCode(qrcode.QRCodeText);
+        //        ViewBag.Message = "QR Code Created successfully";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //catch exception if there is any
+        //    }
+        //    return View("Index", qrcode);
+        //}
+
+
+        //QR Code
         private string GenerateQRCode(string qrcodeText) // qrcodeText is id of material
         {
-            string folderPath = "~/Images/";
-            string imagePath = String.Format("~/Images/{0}.jpg", qrcodeText);
+            string folderPath = "~/QRCode/";
+            string imagePath = String.Format("~/QRCode/{0}.jpg", qrcodeText);
             // If the directory doesn't exist then create it.
             if (!Directory.Exists(Server.MapPath(folderPath)))
             {
@@ -443,6 +475,60 @@ namespace QLVTFinal.Controllers
                 }
             }
             return imagePath;
+        }
+
+        public JsonResult LoadQRCode(int? id)
+        {
+            var mater = (from m in db.Materials
+                            where m.idMaterial == id
+                            select new
+                            {
+                                m.qrcode
+                            }).First();
+            if (mater.qrcode != null)
+            {
+                Material material = GetFirstMaterial(id);
+                material.SubCategory = null;
+                return Json(material, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                string qrcodeText = id.ToString();
+                string folderPath = "/QRCode/";
+                string imagePath = String.Format("/QRCode/{0}.jpg", qrcodeText);
+
+                if (!Directory.Exists(Server.MapPath(folderPath)))
+                {
+                    Directory.CreateDirectory(Server.MapPath(folderPath));
+                }
+
+                var barcodeWriter = new BarcodeWriter();
+                barcodeWriter.Format = BarcodeFormat.QR_CODE;
+                var result = barcodeWriter.Write(qrcodeText);
+
+                string barcodePath = Server.MapPath(imagePath);
+                var barcodeBitmap = new Bitmap(result);
+                using (MemoryStream memory = new MemoryStream())
+                {
+                    using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                        byte[] bytes = memory.ToArray();
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
+                }
+                Material materUpdate = (from m in db.Materials
+                                        where m.idMaterial == id
+                                        select m).First();
+                materUpdate.qrcode = imagePath;
+                db.Entry(materUpdate).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Material material = GetFirstMaterial(id);
+                material.SubCategory = null;
+
+                return Json(material, JsonRequestBehavior.AllowGet);
+            }
         }
 
         //END Method
@@ -501,6 +587,10 @@ namespace QLVTFinal.Controllers
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Material material = serializer.Deserialize<Material>(strMaterial);
+            if (material.idAdmin == 0)
+            {
+                material.idAdmin = null;
+            }
             material.SubCategory = null;
             material.idCategory = null;
             material.nameCategory = null;
@@ -520,7 +610,6 @@ namespace QLVTFinal.Controllers
                 status = false;
                 message = ex.Message;
             }
-
 
             return Json(new
             {
@@ -572,6 +661,10 @@ namespace QLVTFinal.Controllers
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Material material = serializer.Deserialize<Material>(strMaterial);
+            if (material.idAdmin == 0)
+            {
+                material.idAdmin = null;
+            }
             material.SubCategory = null;
             material.idCategory = null;
             material.nameCategory = null;

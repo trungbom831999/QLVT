@@ -28,5 +28,6 @@ namespace QLVTFinal.Models
         public string nameSubCategory { get; set; }
         public Nullable<int> idCategory { get; set; }
         public string nameCategory { get; set; }
+        public string nameAdmin { get; set; }
     }
 }
