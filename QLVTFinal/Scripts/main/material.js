@@ -31,6 +31,7 @@ var loadData = function () {
     if (homeConfig.pageIndex == 0) homeConfig.pageIndex = 1;
     $('#loading').css('display', 'inline-block');
     $('#download-excel').attr("href", `/Materials/Export?name=${name}&idCategory=${idCategory}&sortPrice=${sortPrice}`);
+    $('#download-qrcode').attr("href", `/Materials/ExportQRCode?name=${name}&idCategory=${idCategory}&sortPrice=${sortPrice}`);
     $.ajax({
         url: '/Materials/LoadData',
         type: 'GET',
@@ -51,7 +52,7 @@ var loadData = function () {
                 if (data[i].count === null) data[i].count = 0;
                 if (data[i].idCategory === null) data[i].nameCategory = "Trống";
                 if (data[i].idSubCategory === null) data[i].nameSubCategory = "Trống";
-                html += '<tr class="trMaterial"><td><div class="dropdown float-right"><button type="button" class="btn btn-extension btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button><div class="dropdown-menu"><a class="dropdown-item" href="#" title="Sửa" data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-edit"></i> Sửa</a><a class="dropdown-item" href="#" title="Chi tiết" data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Chi tiết</a><a class="dropdown-item" href="#" title="Xóa" data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</a><a class="dropdown-item" href="#" title="Lấy mã QR" data-toggle="modal" data-target="#qrModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-qrcode"></i> Mã QR</a></div></div><ul class="custom-menu"><li data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '" ><i class="fas fa-edit"></i> Sửa</li><li data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Xem chi tiết</li><li data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</li></ul></td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameMaterial + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].count + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameCategory + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameSubCategory + '</td></tr>';
+                html += '<tr class="trMaterial"><td><div class="dropdown float-right"><button type="button" class="btn btn-extension btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button><div class="dropdown-menu"><a class="dropdown-item" href="#" title="Sửa" data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-edit"></i> Sửa</a><a class="dropdown-item" href="#" title="Chi tiết" data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Chi tiết</a><a class="dropdown-item" href="#" title="Xóa" data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</a><a class="dropdown-item" href="#" title="Lấy mã QR" data-toggle="modal" data-target="#qrModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-qrcode"></i> Mã QR</a></div></div><ul class="custom-menu"><li data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '" ><i class="fas fa-edit"></i> Sửa</li><li data-toggle="modal" data-target="#detailsModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-info-circle"></i> Xem chi tiết</li><li data-toggle="modal" data-target="#deleteModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-trash-alt"></i> Xóa</li><li class="dropdown-item" href="#" title="Lấy mã QR" data-toggle="modal" data-target="#qrModal" data-id="' + data[i].idMaterial + '"><i class="fas fa-qrcode"></i> Mã QR</li></ul></td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameMaterial + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].count + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameCategory + '</td><td data-toggle="modal" data-target="#editModal" data-id="' + data[i].idMaterial + '">' + data[i].nameSubCategory + '</td></tr>';
             }
             $("#tableMaterial").html(html);
             paging(response.total, function () {
@@ -524,8 +525,24 @@ $('#qrModal').on('show.bs.modal', function (event) {
         data: "{}",
         dataType: 'json',
         success: function (data) {
+            var name = data.nameMaterial;
+            var nameReplace = "";
+            for (var i = 0; i < name.length; i++) {
+                if (i == 0) {
+                    if (name[i] != " ") {
+                        nameReplace += name[i]+" ";
+                    }
+                }
+
+                if (name[i] == " " && i < name.length-1) {
+                    if (name[i + 1] != " ") {
+                        nameReplace += name[i+1]+" ";
+                    }
+                }
+            }
+            nameReplace = nameReplace.toUpperCase();
             $('#qrcodeImg').attr('src', data.qrcode);
-            $('#nameMaterial3').text(data.nameMaterial);
+            $('#nameMaterial3').text(nameReplace);
             $('#nameAdmin').text(data.nameAdmin);
         }
     });

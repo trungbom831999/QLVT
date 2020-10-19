@@ -62,8 +62,11 @@
         margin-left: -16px;
     }
 
-/*Right-click*/
-.custom-menu {
+.modal-open {
+    overflow: scroll;
+}
+    /*Right-click*/
+    .custom-menu {
     display: none;
     z-index: 1000;
     position: absolute;
